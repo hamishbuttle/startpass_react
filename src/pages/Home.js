@@ -8,14 +8,23 @@ import {
 //assets
 import token from "../designToken";
 import logo from "../images/startpass_logo.svg";
-import play from "../images/play.svg";
+import play from "../images/play.png";
+import play_icon from "../images/play_icon.svg";
 import close from "../images/close.svg";
 import dots from "../images/vertical_dots.svg";
 import hamish from "../images/hamish.png";
 import seb from "../images/seb.png";
 import girl from "../images/girl.png";
+import start_mission from "../images/start_mission.png";
+//Components
+import CloseButton from "../components/CloseButton";
 //animations
-import { draw } from "../animations";
+import {
+  draw,
+  fadeIn,
+  container,
+  item
+} from "../animations";
 
 const Home = () => {
   const [aboutShow, setAboutShow] = useState(false);
@@ -62,6 +71,16 @@ const Home = () => {
           </div>
         </motion.div>
       </Nav>
+      <Info>
+        <motion.div
+          variants={item}
+          initial="hidden"
+          animate="show"
+        >
+          Complete challenges and build team stories with
+          friends or family!
+        </motion.div>
+      </Info>
       <Challenge>
         <AnimateSharedLayout type="crossfade">
           <motion.div
@@ -78,32 +97,26 @@ const Home = () => {
               }
             }}
           >
-            <motion.img
-              src={play}
-              alt="play icon"
-              whileHover={{ opacity: 0.8 }}
-              animate={{
-                scale: [1, 1.1, 1],
-                transition: {
-                  repeat: Infinity,
-                  duration: 2
-                }
-              }}
-            />
+            <PlayButton>
+              <motion.div
+                whileHover={{ opacity: 0.5 }}
+                animate={{
+                  scale: [1, 1.2, 1],
+                  transition: {
+                    repeat: Infinity,
+                    duration: 1.6
+                  }
+                }}
+                className="play-button-content"
+              >
+                <img src={play_icon} alt="play icon" />
+              </motion.div>
+            </PlayButton>
           </motion.div>
           <AnimatePresence>
             {showStory && (
               <Story layoutId="story">
-                <div className="btn-close-container">
-                  <motion.button
-                    onClick={toggleStoryHandler}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ opacity: 0.2 }}
-                    className="btn-close"
-                  >
-                    <img src={close} alt="close" />
-                  </motion.button>
-                </div>
+                <CloseButton toggle={toggleStoryHandler} />
               </Story>
             )}
           </AnimatePresence>
@@ -113,55 +126,117 @@ const Home = () => {
         {aboutShow && (
           <About>
             <motion.div
-              // drag="y"
               variants={draw}
               initial="hidden"
               animate="show"
               exit="exit"
               className="page"
             >
-              <section>
-                <h1>
-                  Startpass <br />
-                  <span>Challenge</span>
-                </h1>
-                <h3>
-                  Complete real world challenges and build
-                  team stories with friends or family!
-                </h3>
-                <motion.button
-                  whileHover={{
-                    scale: 1.1
-                  }}
-                  className="btn-primary"
-                >
-                  Start Today!
-                </motion.button>
-                <div className="btn-close-container">
+              <div className="decoration-1">
+                <img src={play} alt="play" />
+              </div>
+              <div className="decoration-2">
+                <img src={hamish} alt="play" />
+              </div>
+              <div className="decoration-3">
+                <img src={seb} alt="play" />
+              </div>
+              <div className="wrapper">
+                <section>
+                  <h1>
+                    Startpass <br />
+                    <span>Challenge</span>
+                  </h1>
+                  <h3>
+                    Complete real world challenges and build
+                    team stories with friends or family!
+                  </h3>
                   <motion.button
-                    onClick={toggleAboutHandler}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ opacity: 0.2 }}
-                    className="btn-close"
+                    whileHover={{
+                      scale: 1.1
+                    }}
+                    className="btn-primary"
                   >
-                    <img src={close} alt="close" />
+                    Start!
                   </motion.button>
-                </div>
-              </section>
+                </section>
+                <section>
+                  <h4>Challenges</h4>
+                  <div className="challenge-item">
+                    <div className="challenge-preview">
+                      <img src={hamish} alt="preview" />
+                    </div>
+                    <div>
+                      <p>
+                        <b>Easy challenge</b>
+                      </p>
+                      <p>Walk 5 times per weeks</p>
+                    </div>
+                  </div>
+                  <div className="challenge-item">
+                    <div className="challenge-preview">
+                      <img src={hamish} alt="preview" />
+                    </div>
+                    <div>
+                      <p>
+                        <b>Easy challenge</b>
+                      </p>
+                      <p>Walk 5 times per weeks</p>
+                    </div>
+                  </div>
+                </section>
+                <Mission>
+                  <img src={start_mission} alt="mission" />
+                  <small>
+                    At Startpass our mission is to combat
+                    stress and depression pandemic by
+                    creating a platform that brings people
+                    toghether to complete challenges and
+                    learn about themselves.
+                  </small>
+                </Mission>
+              </div>
+              <CloseButton toggle={toggleAboutHandler} />
             </motion.div>
           </About>
         )}
       </AnimatePresence>
-      <Members>
-        <motion.div className="member m-1">
-          <motion.img drag src={hamish} alt="hamish" />
-        </motion.div>
-        <div className="member m-2">
-          <img src={seb} alt="hamish" />
-        </div>
-        <div className="member m-3">
-          <img src={girl} alt="hamish" />
-        </div>
+      <Members
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
+        <motion.div
+          drag
+          dragConstraints={{
+            top: -8,
+            left: -8,
+            right: 8,
+            bottom: 8
+          }}
+          whileHover={{ scale: 1.05 }}
+          variants={item}
+        ></motion.div>
+        <motion.div
+          drag
+          dragConstraints={{
+            top: -8,
+            left: -8,
+            right: 8,
+            bottom: 8
+          }}
+          variants={item}
+        ></motion.div>
+        <motion.div
+          drag
+          dragConstraints={{
+            top: -8,
+            left: -8,
+            right: 8,
+            bottom: 8
+          }}
+          variants={item}
+        ></motion.div>
       </Members>
     </div>
   );
@@ -169,13 +244,67 @@ const Home = () => {
 
 export default Home;
 
+const Info = styled(motion.div)`
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 500px;
+  z-index: 2;
+  div {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 19px;
+    text-align: center;
+    padding: 1rem;
+    color: white;
+    font-weight: bold;
+  }
+`;
+
+const Members = styled(motion.div)`
+  width: 70px;
+  height: 70px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  div {
+    width: 60px;
+    height: 60px;
+    border-radius: 26px;
+    position: absolute;
+  }
+  div:nth-of-type(1) {
+    left: -80px;
+    top: -90px;
+    background-image: url(${hamish});
+    background-size: contain, cover;
+  }
+  div:nth-of-type(2) {
+    left: 100px;
+    top: -80px;
+    background-image: url(${seb});
+    background-size: contain, cover;
+  }
+  div:nth-of-type(3) {
+    left: 0px;
+    bottom: -110px;
+    background-image: url(${girl});
+    background-size: contain, cover;
+  }
+`;
+
 const Nav = styled(motion.nav)`
-  position: absolute;
+  position: fixed;
   top: 2%;
   left: 50%;
   transform: translateX(-50%);
   width: 92%;
   height: 8vh;
+  z-index: 2;
   .nav-contents {
     .logo-container {
       height: 32px;
@@ -225,16 +354,63 @@ const Nav = styled(motion.nav)`
 `;
 
 const Challenge = styled(motion.div)`
-  width: 200px;
-  height: 200px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%;)
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
   z-index: 2;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+`;
+
+const Story = styled(motion.div)`
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  z-index: 4;
+  video {
+    margin: auto;
+    display: block;
+  }
+`;
+
+const PlayButton = styled(motion.div)`
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 88px;
+  height: 88px;
+  z-index: 3;
+  .play-button-content {
+    width: 88px;
+    height: 88px;
+    background: ${token.colors.primary.primaryGradient};
+    border-radius: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 32px rgba(0, 0, 0, 0.2);
+    &::after {
+      content: "";
+      background: white;
+      width: 76px;
+      height: 76px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 34px;
+    }
+    img {
+      z-index: 1;
+      position: relative;
+      right: -2px;
+    }
+  }
 `;
 
 const About = styled(motion.div)`
@@ -248,50 +424,135 @@ const About = styled(motion.div)`
   .page {
     border-radius: 24px 24px 0 0;
     background: white;
-    padding: 4.8rem 1.4rem 0rem 1.4rem;
+    padding: 5.6rem 1.4rem 4.8rem 1.4rem;
     text-align: center;
     max-width: 1200px;
-    min-height: 200vh;
+    min-height: 100vh;
     margin: 12vh auto 0rem auto;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-const Story = styled(motion.div)`
-  width: 100%;
-  height: 100vh;
-  background: white;
-  position: fixed;
-  z-index: 4;
-`;
-
-const Members = styled(motion.div)`
-  position: absolute;
-  z-index: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90px;
-  height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid red;
-  .member {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    img {
-      width: 100%;
+    overflow: hidden;
+    position: relative;
+    .decoration-1 {
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      transform: translate(-20%, -20%);
+      width: 100px;
+      height: 100px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .decoration-2 {
+      position: absolute;
+      top: 0%;
+      left: 50%;
+      transform: translate(-30%, -30%);
+      width: 60px;
+      height: 60px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .decoration-3 {
+      position: absolute;
+      top: 0%;
+      right: 0%;
+      transform: translate(50%, -10%);
+      width: 90px;
+      height: 90px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    section {
+      margin: 10% 0;
+    }
+    h4 {
+      text-align: left;
+      margin-bottom: 0.8rem;
+      color: ${token.colors.gray.light};
+    }
+    .challenge-item {
+      text-align: left;
+      background: ${token.colors.gray.lightest};
+      padding: 1.2rem 1rem;
+      border-radius: 24px;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      .challenge-preview {
+        width: 40px;
+        height: 40px;
+        margin: 0.5rem;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      &:first-of-type {
+        margin-bottom: 1rem;
+      }
+      p {
+        color: black;
+        font-size: 17px;
+        line-height: 1;
+        margin: 0.4rem 0;
+      }
     }
   }
-  .m-1 {
-    transform: translate(-100px, -100px);
+`;
+
+const Mission = styled.div`
+  margin: 1.6rem 0;
+  padding: 1rem;
+  text-align: center;
+  small {
+    color: ${token.colors.gray.light};
+    font-weight: 500;
+    font-size: 17px;
   }
-  .m-2 {
-    transform: translate(100px, -80px);
-  }
-  .m-3 {
-    transform: translate(0px, 120px);
+  img {
+    margin: 1rem auto;
+    width: 72px;
   }
 `;
+
+// const Members = styled(motion.div)`
+//   position: fixed;
+//   z-index: 0;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   width: 90px;
+//   height: 90px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   border: 2px solid red;
+//   /* .member {
+//     position: absolute;
+//     display: block;
+//     width: 60px;
+//     height: 60px;
+//     background: rgba(0, 0, 0, 0.1);
+//     img {
+//       width: 100%;
+//     }
+//   }
+//   .m-1 {
+//     transform: translate(-100px, -100px);
+//   }
+//   .m-2 {
+//     transform: translate(100px, -80px);
+//   }
+//   .m-3 {
+//     transform: translate(0px, 120px);
+//   } */
+// `;

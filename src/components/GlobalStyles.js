@@ -76,6 +76,12 @@ const GlobalStyle = createGlobalStyle`
         width: 100%;
         background: ${token.colors.primary.primaryGradient};
         position: relative;
+        overflow:hidden;
+        position: fixed;
+  }
+  .wrapper {
+    margin: auto;
+    max-width: 580px;
   }
   .btn-primary {
         border-radius: 19px;
@@ -95,9 +101,11 @@ const GlobalStyle = createGlobalStyle`
   }
   .btn-close-container {
     position: fixed;
-    bottom: 5%;
+    bottom: 1.6rem;
     left:50%;
     transform: translateX(-50%);
+    width: 56px;
+    height: 56px;
   }
   .btn-close {
     border-radius: 24px;
@@ -107,8 +115,8 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items:center;
-    width: 56px;
-    height: 56px;
+    width: 100%;
+    height: 100%;
   }
 `;
 
