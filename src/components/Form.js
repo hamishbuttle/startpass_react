@@ -17,7 +17,6 @@ const Form = ({ setShowModal, showModal }) => {
 
   const onOrientationChange = (e) => {
     setOrientation(e.target.value);
-    console.log(e.target.value);
   };
 
   const canSave = [email, orientation].every(Boolean);
