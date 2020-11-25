@@ -18,20 +18,23 @@ import girl from "../images/girl.png";
 import start_mission from "../images/start_mission.png";
 //Components
 import CloseButton from "../components/CloseButton";
+import BottomNav from "../components/BottomNav";
+import Modal from "../components/Modal";
+import Form from "../components/Form";
 //animations
-import {
-  draw,
-  fadeIn,
-  container,
-  item
-} from "../animations";
+import { container, item, fadeUpIn } from "../animations";
 
 const Home = () => {
-  const [aboutShow, setAboutShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [showStory, setShowStory] = useState(false);
 
-  const toggleAboutHandler = () => {
-    setAboutShow(!aboutShow);
+  // const toggleAboutHandler = () => {
+  //   setAboutShow(!aboutShow);
+  // };
+
+  const toggleModalHandler = (e) => {
+    e.preventDefault();
+    setShowModal(!showModal);
   };
 
   const toggleStoryHandler = () => {
@@ -57,7 +60,7 @@ const Home = () => {
           </div>
           <div className="about-btn-container">
             <motion.div
-              onClick={toggleAboutHandler}
+              onClick={toggleModalHandler}
               className="about-btn"
               whileHover={{ scale: 1.1 }}
               initial={{ scale: 0.4 }}
@@ -70,17 +73,17 @@ const Home = () => {
             </motion.div>
           </div>
         </motion.div>
+        <Info>
+          <motion.div
+            variants={fadeUpIn}
+            initial="hidden"
+            animate="show"
+          >
+            Complete challenges and build team stories with
+            friends!
+          </motion.div>
+        </Info>
       </Nav>
-      <Info>
-        <motion.div
-          variants={item}
-          initial="hidden"
-          animate="show"
-        >
-          Complete challenges and build team stories with
-          friends or family!
-        </motion.div>
-      </Info>
       <Challenge>
         <AnimateSharedLayout type="crossfade">
           <motion.div
@@ -116,91 +119,16 @@ const Home = () => {
           <AnimatePresence>
             {showStory && (
               <Story layoutId="story">
+                {/* <video controls>
+                  <source src={yoga} />
+                </video> */}
                 <CloseButton toggle={toggleStoryHandler} />
               </Story>
             )}
           </AnimatePresence>
         </AnimateSharedLayout>
       </Challenge>
-      <AnimatePresence>
-        {aboutShow && (
-          <About>
-            <motion.div
-              variants={draw}
-              initial="hidden"
-              animate="show"
-              exit="exit"
-              className="page"
-            >
-              <div className="decoration-1">
-                <img src={play} alt="play" />
-              </div>
-              <div className="decoration-2">
-                <img src={hamish} alt="play" />
-              </div>
-              <div className="decoration-3">
-                <img src={seb} alt="play" />
-              </div>
-              <div className="wrapper">
-                <section>
-                  <h1>
-                    Startpass <br />
-                    <span>Challenge</span>
-                  </h1>
-                  <h3>
-                    Complete real world challenges and build
-                    team stories with friends or family!
-                  </h3>
-                  <motion.button
-                    whileHover={{
-                      scale: 1.1
-                    }}
-                    className="btn-primary"
-                  >
-                    Start!
-                  </motion.button>
-                </section>
-                <section>
-                  <h4>Challenges</h4>
-                  <div className="challenge-item">
-                    <div className="challenge-preview">
-                      <img src={hamish} alt="preview" />
-                    </div>
-                    <div>
-                      <p>
-                        <b>Easy challenge</b>
-                      </p>
-                      <p>Walk 5 times per weeks</p>
-                    </div>
-                  </div>
-                  <div className="challenge-item">
-                    <div className="challenge-preview">
-                      <img src={hamish} alt="preview" />
-                    </div>
-                    <div>
-                      <p>
-                        <b>Easy challenge</b>
-                      </p>
-                      <p>Walk 5 times per weeks</p>
-                    </div>
-                  </div>
-                </section>
-                <Mission>
-                  <img src={start_mission} alt="mission" />
-                  <small>
-                    At Startpass our mission is to combat
-                    stress and depression pandemic by
-                    creating a platform that brings people
-                    toghether to complete challenges and
-                    learn about themselves.
-                  </small>
-                </Mission>
-              </div>
-              <CloseButton toggle={toggleAboutHandler} />
-            </motion.div>
-          </About>
-        )}
-      </AnimatePresence>
+
       <Members
         variants={container}
         initial="hidden"
@@ -214,9 +142,10 @@ const Home = () => {
             right: 8,
             bottom: 8
           }}
-          whileHover={{ scale: 1.05 }}
           variants={item}
-        ></motion.div>
+        >
+          <motion.img src={hamish} alt="hamish" />
+        </motion.div>
         <motion.div
           drag
           dragConstraints={{
@@ -226,7 +155,9 @@ const Home = () => {
             bottom: 8
           }}
           variants={item}
-        ></motion.div>
+        >
+          <img src={seb} alt="seb" />
+        </motion.div>
         <motion.div
           drag
           dragConstraints={{
@@ -236,8 +167,22 @@ const Home = () => {
             bottom: 8
           }}
           variants={item}
-        ></motion.div>
+        >
+          <img src={girl} alt="seb" />
+        </motion.div>
       </Members>
+      <BottomNav toggleModalHandler={toggleModalHandler} />
+      <Modal
+        showModal={showModal}
+        toggleModalHandler={toggleModalHandler}
+      >
+        <div className="wrapper">
+          <Form
+            setShowModal={setShowModal}
+            showModal={showModal}
+          />
+        </div>
+      </Modal>
     </div>
   );
 };
@@ -245,12 +190,12 @@ const Home = () => {
 export default Home;
 
 const Info = styled(motion.div)`
-  position: fixed;
-  top: 80px;
+  position: absolute;
+  top: 116%;
   left: 50%;
   transform: translateX(-50%);
-  width: 92%;
-  max-width: 500px;
+  width: 100%;
+  max-width: 720px;
   z-index: 2;
   div {
     background: rgba(255, 255, 255, 0.5);
@@ -259,7 +204,7 @@ const Info = styled(motion.div)`
     text-align: center;
     padding: 1rem;
     color: white;
-    font-weight: bold;
+    font-weight: 900;
   }
 `;
 
@@ -278,22 +223,16 @@ const Members = styled(motion.div)`
     position: absolute;
   }
   div:nth-of-type(1) {
-    left: -80px;
-    top: -90px;
-    background-image: url(${hamish});
-    background-size: contain, cover;
+    left: -10px;
+    top: -100px;
   }
   div:nth-of-type(2) {
     left: 100px;
-    top: -80px;
-    background-image: url(${seb});
-    background-size: contain, cover;
+    bottom: -90px;
   }
   div:nth-of-type(3) {
-    left: 0px;
-    bottom: -110px;
-    background-image: url(${girl});
-    background-size: contain, cover;
+    left: -72px;
+    bottom: -100px;
   }
 `;
 
@@ -371,10 +310,11 @@ const Story = styled(motion.div)`
   left: 0%;
   top: 0%;
   z-index: 4;
-  video {
-    margin: auto;
-    display: block;
-  }
+  /* video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  } */
 `;
 
 const PlayButton = styled(motion.div)`
@@ -388,7 +328,7 @@ const PlayButton = styled(motion.div)`
   .play-button-content {
     width: 88px;
     height: 88px;
-    background: ${token.colors.primary.primaryGradient};
+    background: linear-gradient(#ffe976, #ffb800);
     border-radius: 38px;
     display: flex;
     justify-content: center;
@@ -409,6 +349,7 @@ const PlayButton = styled(motion.div)`
       z-index: 1;
       position: relative;
       right: -2px;
+      width: 32px;
     }
   }
 `;
@@ -506,21 +447,6 @@ const About = styled(motion.div)`
         margin: 0.4rem 0;
       }
     }
-  }
-`;
-
-const Mission = styled.div`
-  margin: 1.6rem 0;
-  padding: 1rem;
-  text-align: center;
-  small {
-    color: ${token.colors.gray.light};
-    font-weight: 500;
-    font-size: 17px;
-  }
-  img {
-    margin: 1rem auto;
-    width: 72px;
   }
 `;
 

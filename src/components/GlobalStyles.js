@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import token from "../designToken";
+import downArrow from "../images/down_arrow.png";
 
 const GlobalStyle = createGlobalStyle`
   *, body {
@@ -20,13 +21,13 @@ const GlobalStyle = createGlobalStyle`
         margin: 1rem auto;
         ${token.effects.shadow.light};
         ${token.layout.media.tablet} {
-            font-size: 3.6rem
+            font-size: 2.8rem
         }
         ${token.layout.media.desktop} {
-            font-size: 3.8rem
+            font-size: 3rem
         }
         ${token.layout.media.desktopLg} {
-            font-size: 4rem
+            font-size: 3.2rem
         }
         span {
             background: ${token.colors.primary.primaryGradient};
@@ -47,12 +48,16 @@ const GlobalStyle = createGlobalStyle`
         }
     }
     h3 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 700;
-        max-width: 560px;
-        margin:  auto;
+        max-width: 400px;
+        margin: 1rem auto 2rem auto;
+        color: ${token.colors.gray.dark};
         ${token.layout.media.tablet} {
             font-size: 1.6rem
+        }        
+        span {
+        color: ${token.colors.primary.primary};
         }
     }
     p {
@@ -67,10 +72,43 @@ const GlobalStyle = createGlobalStyle`
   }
   img { 
       display: block;
+      width :100%;
   }
   li {
       list-style: none;
   }
+  input, select, option {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    width: 100%;
+    display: block;
+    /* background: white; */
+    padding: .8rem 1rem;
+    height: 56px;
+    box-shadow: 2px 2px 16px rgba(0,0,0,.1);
+    border-radius: 14px;
+    border: 1px solid #f9f9f9;
+    font-family: museo-sans-rounded, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: ${token.colors.gray.darkest}
+  }
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(${downArrow});
+    background-position: right 14px top 50%;
+    background-size: 14px;
+    background-repeat: no-repeat;
+  }
+
+  select::-ms-expand {
+      display: none;
+  }
+
   .splash {
         height: 100vh;
         width: 100%;
@@ -84,21 +122,32 @@ const GlobalStyle = createGlobalStyle`
     max-width: 580px;
   }
   .btn-primary {
-        border-radius: 19px;
-        background: ${token.colors.primary.primaryGradient};
-        color: white;
-        text-align: center;
-        display: inline-block;
-        padding: .8rem 2rem;
-        border: none;
-        font-size: 19px;
-        margin: 2rem auto;
-        font-weight: 900;
-        text-transform: uppercase;
-        font-family: museo-sans-rounded, sans-serif;
-        letter-spacing: .4px;
-        /* filter: drop-shadow(0px 3.02041px 18.1224px rgba(0, 0, 0, 0.16)); */
+    width: 100%;
+    border-radius: 14px;
+    background: ${token.colors.primary.primaryGradient};
+    color: white;
+    text-align: center;
+    display: inline-block;
+    padding: .8rem 2rem;
+    height: 48px;
+    border: none;
+    font-size: 17px;
+    margin: auto;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-family: museo-sans-rounded, sans-serif;
+    letter-spacing: .4px;
+    transition: all .4s ease-out;
+    filter: drop-shadow(0px 3.02041px 18.1224px rgba(0, 0, 0, 0.16));
+    ${token.layout.tablet} {
+      height: 56px;
+    }
   }
+  button:disabled,
+  button[disabled]{
+    color: rgba(255,255,255, .5);
+  }
+
   .btn-close-container {
     position: fixed;
     bottom: 1.6rem;
@@ -106,6 +155,7 @@ const GlobalStyle = createGlobalStyle`
     transform: translateX(-50%);
     width: 56px;
     height: 56px;
+    z-index: 5;
   }
   .btn-close {
     border-radius: 24px;
@@ -117,6 +167,9 @@ const GlobalStyle = createGlobalStyle`
     align-items:center;
     width: 100%;
     height: 100%;
+    img {
+      width: 48%;
+    }
   }
 `;
 

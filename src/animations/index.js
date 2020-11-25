@@ -13,17 +13,16 @@ export const draw = {
   }
 };
 
-export const fadeIn = {
-  hidden: { opacity: 0, scale: 0.6 },
+export const fadeInOut = {
+  hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    scale: 1,
     transition: {
-      duration: 0.5,
+      duration: 0.4,
       delay: 0.4
     }
   },
-  exit: { opacity: 1 }
+  exit: { opacity: 0 }
 };
 
 export const scaleIn = {
@@ -46,4 +45,13 @@ export const container = {
 export const item = {
   hidden: { opacity: 0, scale: 0 },
   show: { opacity: 1, scale: 1 }
+};
+
+export const fadeUpIn = {
+  hidden: { opacity: 0, y: 10 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { delay: 1.6, duration: 1 }
+  }
 };
