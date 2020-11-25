@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import {
   motion,
@@ -8,14 +8,12 @@ import {
 //assets
 import token from "../designToken";
 import logo from "../images/startpass_logo.svg";
-import play from "../images/play.png";
 import play_icon from "../images/play_icon.svg";
-import close from "../images/close.svg";
 import dots from "../images/vertical_dots.svg";
 import hamish from "../images/hamish.png";
 import seb from "../images/seb.png";
 import girl from "../images/girl.png";
-import start_mission from "../images/start_mission.png";
+import close from "../images/close.svg";
 //Components
 import CloseButton from "../components/CloseButton";
 import BottomNav from "../components/BottomNav";
@@ -28,9 +26,9 @@ const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [showStory, setShowStory] = useState(false);
 
-  // const toggleAboutHandler = () => {
-  //   setAboutShow(!aboutShow);
-  // };
+  const video = useRef(null);
+  // const videoCanPlay = video.onLoadedData && showStory;
+  // console.log(video);
 
   const toggleModalHandler = (e) => {
     e.preventDefault();
@@ -119,10 +117,29 @@ const Home = () => {
           <AnimatePresence>
             {showStory && (
               <Story layoutId="story">
-                {/* <video controls>
-                  <source src={yoga} />
-                </video> */}
-                <CloseButton toggle={toggleStoryHandler} />
+                <div className="video-container">
+                  <div
+                    className="video-bubble"
+                    onClick={toggleStoryHandler}
+                  >
+                    Startpass Team
+                  </div>
+                  <video
+                    ref={video}
+                    autoPlay
+                    loop
+                    playsInline
+                    preload
+                  >
+                    <source src="https://firebasestorage.googleapis.com/v0/b/startpass-8f4f5.appspot.com/o/startpass%20portrait.mp4?alt=media&token=4960d27e-c920-47c4-acb2-11725181f43e" />
+                  </video>
+                  <div
+                    onClick={toggleStoryHandler}
+                    className="close-btn-relative"
+                  >
+                    <img src={close} alt="close" />
+                  </div>
+                </div>
               </Story>
             )}
           </AnimatePresence>
@@ -204,7 +221,9 @@ const Info = styled(motion.div)`
     text-align: center;
     padding: 1rem;
     color: white;
-    font-weight: 900;
+    font-weight: 700;
+    max-width: 500px;
+    margin: auto;
   }
 `;
 
@@ -305,16 +324,61 @@ const Challenge = styled(motion.div)`
 const Story = styled(motion.div)`
   width: 100vw;
   height: 100vh;
-  background: white;
   position: fixed;
   left: 0%;
   top: 0%;
   z-index: 4;
-  /* video {
-    width: 100%;
-    height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  @media screen and (min-width: 640px) {
+    padding: 1.6rem;
+  }
+  .video-container {
+    position: relative;
+  }
+  video {
+    background: white;
+    width: 100vw;
+    height: 101vh;
     object-fit: cover;
-  } */
+    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.4);
+    @media screen and (min-width: 640px) {
+      max-width: 320px;
+      max-height: 640px;
+      border-radius: 24px;
+    }
+  }
+  .video-bubble {
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.8rem 1rem;
+    background: ${token.colors.primary.primaryGradient};
+    display: block;
+    border-radius: 24px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  .close-btn-relative {
+    position: absolute;
+    bottom: 1.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 56px;
+    height: 56px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    border-radius: 24px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    img {
+      width: 24px;
+    }
+  }
 `;
 
 const PlayButton = styled(motion.div)`
@@ -354,101 +418,101 @@ const PlayButton = styled(motion.div)`
   }
 `;
 
-const About = styled(motion.div)`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 3;
-  overflow: scroll;
-  .page {
-    border-radius: 24px 24px 0 0;
-    background: white;
-    padding: 5.6rem 1.4rem 4.8rem 1.4rem;
-    text-align: center;
-    max-width: 1200px;
-    min-height: 100vh;
-    margin: 12vh auto 0rem auto;
-    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    position: relative;
-    .decoration-1 {
-      position: absolute;
-      top: 0%;
-      left: 0%;
-      transform: translate(-20%, -20%);
-      width: 100px;
-      height: 100px;
-      overflow: hidden;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .decoration-2 {
-      position: absolute;
-      top: 0%;
-      left: 50%;
-      transform: translate(-30%, -30%);
-      width: 60px;
-      height: 60px;
-      overflow: hidden;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .decoration-3 {
-      position: absolute;
-      top: 0%;
-      right: 0%;
-      transform: translate(50%, -10%);
-      width: 90px;
-      height: 90px;
-      overflow: hidden;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    section {
-      margin: 10% 0;
-    }
-    h4 {
-      text-align: left;
-      margin-bottom: 0.8rem;
-      color: ${token.colors.gray.light};
-    }
-    .challenge-item {
-      text-align: left;
-      background: ${token.colors.gray.lightest};
-      padding: 1.2rem 1rem;
-      border-radius: 24px;
-      display: flex;
-      justify-content: start;
-      align-items: center;
-      .challenge-preview {
-        width: 40px;
-        height: 40px;
-        margin: 0.5rem;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-      &:first-of-type {
-        margin-bottom: 1rem;
-      }
-      p {
-        color: black;
-        font-size: 17px;
-        line-height: 1;
-        margin: 0.4rem 0;
-      }
-    }
-  }
-`;
+// const About = styled(motion.div)`
+//   position: fixed;
+//   left: 0;
+//   top: 0;
+//   width: 100%;
+//   height: 100vh;
+//   z-index: 3;
+//   overflow: scroll;
+//   .page {
+//     border-radius: 24px 24px 0 0;
+//     background: white;
+//     padding: 5.6rem 1.4rem 4.8rem 1.4rem;
+//     text-align: center;
+//     max-width: 1200px;
+//     min-height: 100vh;
+//     margin: 12vh auto 0rem auto;
+//     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.1);
+//     overflow: hidden;
+//     position: relative;
+//     .decoration-1 {
+//       position: absolute;
+//       top: 0%;
+//       left: 0%;
+//       transform: translate(-20%, -20%);
+//       width: 100px;
+//       height: 100px;
+//       overflow: hidden;
+//       img {
+//         width: 100%;
+//         height: 100%;
+//       }
+//     }
+//     .decoration-2 {
+//       position: absolute;
+//       top: 0%;
+//       left: 50%;
+//       transform: translate(-30%, -30%);
+//       width: 60px;
+//       height: 60px;
+//       overflow: hidden;
+//       img {
+//         width: 100%;
+//         height: 100%;
+//       }
+//     }
+//     .decoration-3 {
+//       position: absolute;
+//       top: 0%;
+//       right: 0%;
+//       transform: translate(50%, -10%);
+//       width: 90px;
+//       height: 90px;
+//       overflow: hidden;
+//       img {
+//         width: 100%;
+//         height: 100%;
+//       }
+//     }
+//     section {
+//       margin: 10% 0;
+//     }
+//     h4 {
+//       text-align: left;
+//       margin-bottom: 0.8rem;
+//       color: ${token.colors.gray.light};
+//     }
+//     .challenge-item {
+//       text-align: left;
+//       background: ${token.colors.gray.lightest};
+//       padding: 1.2rem 1rem;
+//       border-radius: 24px;
+//       display: flex;
+//       justify-content: start;
+//       align-items: center;
+//       .challenge-preview {
+//         width: 40px;
+//         height: 40px;
+//         margin: 0.5rem;
+//         img {
+//           width: 100%;
+//           height: 100%;
+//         }
+//       }
+//       &:first-of-type {
+//         margin-bottom: 1rem;
+//       }
+//       p {
+//         color: black;
+//         font-size: 17px;
+//         line-height: 1;
+//         margin: 0.4rem 0;
+//       }
+//     }
+//   }
+// `;
 
 // const Members = styled(motion.div)`
 //   position: fixed;
