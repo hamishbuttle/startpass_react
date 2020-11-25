@@ -14,8 +14,8 @@ import hamish from "../images/hamish.png";
 import seb from "../images/seb.png";
 import girl from "../images/girl.png";
 import close from "../images/close.svg";
+import poster from "../images/poster.png";
 //Components
-import CloseButton from "../components/CloseButton";
 import BottomNav from "../components/BottomNav";
 import Modal from "../components/Modal";
 import Form from "../components/Form";
@@ -130,6 +130,7 @@ const Home = () => {
                     loop
                     playsInline
                     preload
+                    poster={poster}
                   >
                     <source src="https://firebasestorage.googleapis.com/v0/b/startpass-8f4f5.appspot.com/o/startpass%20portrait.mp4?alt=media&token=4960d27e-c920-47c4-acb2-11725181f43e" />
                   </video>
