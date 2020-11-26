@@ -88,12 +88,11 @@ const Home = () => {
             onClick={toggleStoryHandler}
             layoutId="story"
             className="play-btn-container"
-            initial={{ opacity: 0, scale: 0.6 }}
+            initial={{ opacity: 0 }}
             animate={{
               opacity: 1,
-              scale: 1,
               transition: {
-                duration: 0.4,
+                duration: 0.8,
                 delay: 1
               }
             }}
@@ -129,7 +128,6 @@ const Home = () => {
                     autoPlay
                     loop
                     playsInline
-                    preload
                     poster={poster}
                   >
                     <source src="https://firebasestorage.googleapis.com/v0/b/startpass-8f4f5.appspot.com/o/startpass%20portrait.mp4?alt=media&token=4960d27e-c920-47c4-acb2-11725181f43e" />
